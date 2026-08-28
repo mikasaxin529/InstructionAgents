@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>坐井观天 · 第1课时</title>
+<style>/* 小学语文课件 · 暖白大字卡片样式（与 PPTX 同一套 token） */
+:root {
+  --bg: #FDF9F1;
+  --bg-card: #FFFFFF;
+  --title-bar: #ED7D31;
+  --text: #4A3B2E;
+  --title-text: #3D2B1F;
+  --text-light: #9C8B78;
+  --accent: #ED7D31;
+  --accent2: #3E8E5A;
+  --accent3: #3E7BB6;
+  --divider: #EAD9BE;
+  /* 关键词高亮轮换色 */
+  --hl1: #3E7BB6;
+  --hl2: #3E8E5A;
+  --hl3: #E2574C;
+  --hl4: #8E6BB5;
+  /* 声调标色 */
+  --tone1: #D9534F;
+  --tone2: #E8A33C;
+  --tone3: #5BA88A;
+  --tone4: #5B8AB5;
+  --tone0: #9AA0A6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  font-family: "微软雅黑", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", "黑体", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* 幻灯片容器：全屏单页 */
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide {
+  display: none;
+  width: 100%; height: 100%;
+  padding: 0;
+  background: var(--bg);
+  position: relative;
+}
+.slide.active { display: flex; flex-direction: column; }
+
+/* 封面 */
+.slide.cover {
+  justify-content: center; align-items: center; text-align: center;
+}
+.slide.cover .cover-title {
+  font-size: 5em; color: var(--accent); font-weight: 800;
+  margin-bottom: 0.3em;
+}
+.slide.cover .cover-sub { font-size: 1.6em; color: var(--text-light); }
+.slide.cover .cover-period { font-size: 1.4em; color: var(--accent2); margin-top: 0.5em; }
+
+/* 标题色带 */
+.title-bar {
+  background: var(--title-bar);
+  color: #fff; font-size: 2em; font-weight: 700;
+  padding: 0.4em 1.2em;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.title-bar .period-tag { font-size: 0.6em; opacity: 0.95; }
+
+/* 内容区 */
+.content {
+  flex: 1; padding: 1em 2.2em; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 0.6em;
+}
+
+/* 元素样式 */
+.elem-h1 { font-size: 2em; color: var(--accent); font-weight: 700; margin: 0.2em 0; }
+.elem-h2 { font-size: 1.6em; color: var(--accent); font-weight: 700; margin: 0.2em 0; }
+.elem-h3 { font-size: 1.3em; color: var(--accent); font-weight: 600; margin: 0.1em 0; }
+.elem-paragraph { font-size: 1.4em; line-height: 1.8; }
+.elem-paragraph .emph { color: var(--accent); font-weight: 700; }
+.elem-list { font-size: 1.3em; line-height: 1.9; padding-left: 1.2em; }
+.elem-list li { margin: 0.2em 0; }
+.elem-quote {
+  font-family: "楷体", "KaiTi", "STKaiti", serif;
+  font-size: 1.8em; color: var(--accent); text-align: center;
+  padding: 0.4em 1em; background: #fff; border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.elem-quote .quote-src { display: block; font-size: 0.5em; color: var(--text-light); text-align: right; }
+
+/* 注音 ruby */
+ruby { ruby-position: over; }
+ruby rt {
+  font-size: 0.45em; font-family: Consolas, monospace;
+  letter-spacing: 0.05em;
+}
+ruby rt.t1 { color: var(--tone1); }
+ruby rt.t2 { color: var(--tone2); }
+ruby rt.t3 { color: var(--tone3); }
+ruby rt.t4 { color: var(--tone4); }
+ruby rt.t0 { color: var(--tone0); }
+.ruby-line { font-size: 2em; text-align: center; padding: 0.5em; }
+
+/* 古诗 */
+.poem { text-align: center; padding: 1em; }
+.poem .poem-title { font-family: "楷体", serif; font-size: 2.4em; color: var(--accent); margin-bottom: 0.4em; }
+.poem .poem-line { font-family: "楷体", serif; font-size: 2em; margin: 0.3em 0; }
+
+/* 生字卡 */
+.word-cards {
+  display: grid; gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  padding: 0.5em;
+}
+.word-card {
+  background: var(--bg-card); border-radius: 16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  padding: 0.8em; text-align: center;
+}
+.word-card .wc-pinyin { font-family: Consolas, monospace; font-size: 1.3em; color: var(--accent2); }
+.word-card .wc-char {
+  font-size: 4em; font-weight: 800; color: var(--text); line-height: 1.1;
+}
+.word-card .wc-groups { font-size: 1.1em; color: var(--text-light); margin-top: 0.3em; }
+.word-card .wc-sentence { font-size: 1em; color: var(--text-light); margin-top: 0.2em; }
+
+/* 田字格/写字 */
+.revision { display: grid; gap: 1em; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.revision-card { background: var(--bg-card); border-radius: 14px; padding: 1em; display: flex; gap: 1em; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.tianzi {
+  width: 130px; height: 130px; flex-shrink: 0;
+  background: #fff; border: 2px solid var(--text-light);
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.tianzi::before, .tianzi::after {
+  content: ''; position: absolute; background: var(--divider);
+}
+.tianzi::before { left: 50%; top: 5%; bottom: 5%; width: 1px; }
+.tianzi::after { top: 50%; left: 5%; right: 5%; height: 1px; }
+.tianzi .big-char { font-size: 3.5em; color: var(--text); position: relative; z-index: 1; }
+.revision-note { font-size: 1.1em; line-height: 1.6; }
+.revision-note b { color: var(--accent); }
+
+/* 板书 */
+.board { text-align: center; padding: 1em; }
+.board-title { font-family: "楷体", serif; font-size: 2.4em; color: var(--accent); margin-bottom: 0.6em; }
+.board-node { font-size: 1.5em; font-weight: 700; margin: 0.3em 0; }
+.board-child { font-size: 1.2em; color: var(--text-light); margin-left: 2em; }
+
+/* 课堂互动 */
+.discussion {
+  background: #fff; border-left: 6px solid var(--accent2);
+  border-radius: 8px; padding: 1em 1.2em; font-size: 1.4em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.discussion .q { color: var(--accent2); font-weight: 700; margin-bottom: 0.5em; }
+.discussion .hint { color: var(--text-light); font-size: 0.8em; }
+.discussion .form { display: inline-block; background: var(--accent); color: #fff; border-radius: 6px; padding: 0.1em 0.6em; font-size: 0.7em; margin-top: 0.5em; }
+
+/* 表格 */
+.elem-table { width: 100%; border-collapse: collapse; font-size: 1.2em; margin: 0.5em 0; }
+.elem-table th { background: var(--accent); color: #fff; padding: 0.5em; }
+.elem-table td { background: #fff; padding: 0.5em; border: 1px solid var(--divider); text-align: center; }
+.elem-table tr:nth-child(even) td { background: var(--bg); }
+
+/* 评价量表用表格同款 */
+
+/* 教师备注（默认隐藏） */
+.note { font-size: 1em; color: var(--text-light); background: #fff7ee; border-radius: 6px; padding: 0.5em 0.8em; }
+.note::before { content: "📋 "; }
+
+/* 图片 */
+.elem-image { text-align: center; }
+.elem-image img { max-width: 80%; max-height: 50vh; border-radius: 12px; }
+.elem-image .caption { font-size: 1em; color: var(--text-light); margin-top: 0.3em; }
+
+/* 导航 */
+.nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(61,43,31,0.85); color: #fff;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5em 2em; font-size: 1.1em; z-index: 100;
+}
+.nav button {
+  background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  padding: 0.4em 1.2em; font-size: 1em; cursor: pointer;
+}
+.nav button:hover { background: #c8622f; }
+.nav .counter { font-family: Consolas, monospace; }
+
+/* 进度条 */
+.progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--accent); z-index: 101; transition: width 0.3s; }
+</style>
+</head>
+<body>
+<div class="progress"></div>
+<div class="deck">
+
+  <section class="slide cover" id="p1-01">
+    
+    
+      <div class="cover-title">坐井观天</div>
+      <div class="cover-sub">部编版二年级上册 · 精读</div>
+      <div class="cover-period">第 1 课时</div>
+    
+    <div class="content">
+    
+      <div class="elem-h1">坐井观天</div>
+    
+      <div class="elem-paragraph">部编版二年级上册 · 第 1 课时</div>
+    
+      <div class="elem-image"><div style="height:30vh"></div><div class="caption">井底之蛙</div></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-02">
+    
+    <div class="title-bar">
+      <span>本课时目录</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h2">第 1 课时 目录</div>
+    
+      <ol class="elem-list"><li>情境导入</li><li>初读感知</li><li>会认字</li><li>会写字</li><li>词语理解</li><li>再读梳理</li><li>课堂小结</li><li>基础作业</li></ol>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-03">
+    
+    <div class="title-bar">
+      <span>学习目标</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">学习目标</div>
+    
+      <ol class="elem-list"><li>认识9个生字，会写6个字</li><li>正确流利有感情地朗读课文</li><li>理解&quot;坐井观天、无边无际&quot;的意思</li><li>懂得故事蕴含的道理</li></ol>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-04">
+    
+    <div class="title-bar">
+      <span>情境导入</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">情境导入</div>
+    
+      <div class="elem-paragraph">一只<span class="emph">青蛙</span>坐在井里，一只小鸟飞来，落在井沿上。它们之间会发生什么故事呢？</div>
+    
+      <div class="discussion"><div class="q">❓ 你看到过&quot;井&quot;吗？说说井是什么样子的。</div><div class="hint">💡 联系生活，想想井口的形状和大小。</div><span class="form">全班交流</span></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-05">
+    
+    <div class="title-bar">
+      <span>初读感知 · 注音课文</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">初读感知</div>
+    
+      <div class="elem-paragraph"><span class="emph">朗读要求</span>：读准字音，读通句子，遇到难读的地方多读几遍。</div>
+    
+      <div class="ruby-line" data-read="青蛙坐在井里。小鸟飞来，落在井沿上。"><ruby><rb>青</rb><rt class="t1">qīng</rt></ruby><ruby><rb>蛙</rb><rt class="t1">wā</rt></ruby><ruby><rb>坐</rb><rt class="t4">zuò</rt></ruby><ruby><rb>在</rb><rt class="t4">zài</rt></ruby><ruby><rb>井</rb><rt class="t3">jǐng</rt></ruby><ruby><rb>里</rb><rt class="t3">lǐ</rt></ruby><ruby><rb>。</rb><rt class="t3">xiǎo</rt></ruby><ruby><rb>小</rb><rt class="t3">niǎo</rt></ruby><ruby><rb>鸟</rb><rt class="t1">fēi</rt></ruby><ruby><rb>飞</rb><rt class="t2">lái</rt></ruby><ruby><rb>来</rb><rt class="t4">luò</rt></ruby><ruby><rb>，</rb><rt class="t4">zài</rt></ruby><ruby><rb>落</rb><rt class="t3">jǐng</rt></ruby><ruby><rb>在</rb><rt class="t2">yán</rt></ruby><ruby><rb>井</rb><rt class="t0">shang</rt></ruby><ruby><rb>沿</rb><rt></rt></ruby><ruby><rb>上</rb><rt></rt></ruby><ruby><rb>。</rb><rt></rt></ruby></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-06">
+    
+    <div class="title-bar">
+      <span>初读感知 · 课文续</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h2">初读感知</div>
+    
+      <div class="ruby-line" data-read="青蛙问小鸟：你从哪儿来呀？小鸟说：我从天上来，飞了一百多里，口渴了，下来找点水喝。"><ruby><rb>青</rb><rt class="t1">qīng</rt></ruby><ruby><rb>蛙</rb><rt class="t1">wā</rt></ruby><ruby><rb>问</rb><rt class="t4">wèn</rt></ruby><ruby><rb>小</rb><rt class="t3">xiǎo</rt></ruby><ruby><rb>鸟</rb><rt class="t3">niǎo</rt></ruby><ruby><rb>：</rb><rt class="t3">nǐ</rt></ruby><ruby><rb>你</rb><rt class="t2">cóng</rt></ruby><ruby><rb>从</rb><rt class="t3">nǎr</rt></ruby><ruby><rb>哪</rb><rt class="t2">lái</rt></ruby><ruby><rb>儿</rb><rt class="t0">ya</rt></ruby><ruby><rb>来</rb><rt class="t3">xiǎo</rt></ruby><ruby><rb>呀</rb><rt class="t3">niǎo</rt></ruby><ruby><rb>？</rb><rt class="t1">shuō</rt></ruby><ruby><rb>小</rb><rt class="t3">wǒ</rt></ruby><ruby><rb>鸟</rb><rt class="t2">cóng</rt></ruby><ruby><rb>说</rb><rt class="t1">tiān</rt></ruby><ruby><rb>：</rb><rt class="t0">shang</rt></ruby><ruby><rb>我</rb><rt class="t2">lái</rt></ruby><ruby><rb>从</rb><rt class="t1">fēi</rt></ruby><ruby><rb>天</rb><rt class="t0">le</rt></ruby><ruby><rb>上</rb><rt class="t1">yī</rt></ruby><ruby><rb>来</rb><rt class="t3">bǎi</rt></ruby><ruby><rb>，</rb><rt class="t1">duō</rt></ruby><ruby><rb>飞</rb><rt class="t3">lǐ</rt></ruby><ruby><rb>了</rb><rt class="t3">kǒu</rt></ruby><ruby><rb>一</rb><rt class="t3">kě</rt></ruby><ruby><rb>百</rb><rt class="t0">le</rt></ruby><ruby><rb>多</rb><rt class="t4">xià</rt></ruby><ruby><rb>里</rb><rt class="t2">lái</rt></ruby><ruby><rb>，</rb><rt class="t3">zhǎo</rt></ruby><ruby><rb>口</rb><rt class="t3">diǎn</rt></ruby><ruby><rb>渴</rb><rt class="t3">shuǐ</rt></ruby><ruby><rb>了</rb><rt class="t1">hē</rt></ruby><ruby><rb>，</rb><rt></rt></ruby><ruby><rb>下</rb><rt></rt></ruby><ruby><rb>来</rb><rt></rt></ruby><ruby><rb>找</rb><rt></rt></ruby><ruby><rb>点</rb><rt></rt></ruby><ruby><rb>水</rb><rt></rt></ruby><ruby><rb>喝</rb><rt></rt></ruby><ruby><rb>。</rb><rt></rt></ruby></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-07">
+    
+    <div class="title-bar">
+      <span>会认字 · 生字朋友</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">我会认</div>
+    
+      <div class="word-cards"><div class="word-card"><div class="wc-pinyin t2">yán</div><div class="wc-char" data-read="沿" data-hanzi="沿">沿</div><div class="wc-groups">井沿 沿着</div><div class="wc-sentence">小鸟落在井沿上。</div></div><div class="word-card"><div class="wc-pinyin t2">dá</div><div class="wc-char" data-read="答" data-hanzi="答">答</div><div class="wc-groups">回答 答话</div><div class="wc-sentence">青蛙回答了小鸟的问题。</div></div><div class="word-card"><div class="wc-pinyin t3">kě</div><div class="wc-char" data-read="渴" data-hanzi="渴">渴</div><div class="wc-groups">口渴 渴望</div><div class="wc-sentence">小鸟口渴了，下来找水喝。</div></div><div class="word-card"><div class="wc-pinyin t1">hē</div><div class="wc-char" data-read="喝" data-hanzi="喝">喝</div><div class="wc-groups">喝水 喝酒</div><div class="wc-sentence">下来找点水喝。</div></div></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-08">
+    
+    <div class="title-bar">
+      <span>会认字 · 续</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h2">我会认</div>
+    
+      <div class="word-cards"><div class="word-card"><div class="wc-pinyin t4">huà</div><div class="wc-char" data-read="话" data-hanzi="话">话</div><div class="wc-groups">说话 对话</div><div class="wc-sentence">它们说起话来。</div></div><div class="word-card"><div class="wc-pinyin t4">nòng</div><div class="wc-char" data-read="弄" data-hanzi="弄">弄</div><div class="wc-groups">弄清 摆弄</div><div class="wc-sentence">要弄清事情的真相。</div></div><div class="word-card"><div class="wc-pinyin t4">cuò</div><div class="wc-char" data-read="错" data-hanzi="错">错</div><div class="wc-groups">错误 弄错</div><div class="wc-sentence">你可别弄错了。</div></div><div class="word-card"><div class="wc-pinyin t4">jì</div><div class="wc-char" data-read="际" data-hanzi="际">际</div><div class="wc-groups">无边无际 天际</div><div class="wc-sentence">天无边无际，大得很哪！</div></div></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-09">
+    
+    <div class="title-bar">
+      <span>会写字 · 田字格</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">我会写</div>
+    
+      <div class="revision"><div class="revision-card"><div class="tianzi"><div class="big-char" data-hanzi="井">井</div></div><div class="revision-note"><b>易错：</b>横画间距要匀称，竖画在横画正中<br><b>运笔：</b>先写两横，再写撇竖</div></div><div class="revision-card"><div class="tianzi"><div class="big-char" data-hanzi="观">观</div></div><div class="revision-note"><b>易错：</b>右边&quot;见&quot;的竖弯钩要舒展<br><b>运笔：</b>左窄右宽</div></div></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-10">
+    
+    <div class="title-bar">
+      <span>会写字 · 续</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h2">我会写</div>
+    
+      <div class="revision"><div class="revision-card"><div class="tianzi"><div class="big-char" data-hanzi="沿">沿</div></div><div class="revision-note"><b>易错：</b>右上&quot;几&quot;不要写成&quot;儿&quot;<br><b>运笔：</b>左窄右宽，右上横折弯钩</div></div><div class="revision-card"><div class="tianzi"><div class="big-char" data-hanzi="答">答</div></div><div class="revision-note"><b>易错：</b>竹字头要写紧凑<br><b>运笔：</b>上下结构，上宽下窄</div></div></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-11">
+    
+    <div class="title-bar">
+      <span>词语理解</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">词语理解</div>
+    
+      <table class="elem-table"><thead><tr><th>词语</th><th>读音</th><th>意思</th></tr></thead><tbody><tr><td>坐井观天</td><td>zuò jǐng guān tiān</td><td>坐在井底看天，比喻目光短浅</td></tr><tr><td>无边无际</td><td>wú biān wú jì</td><td>没有边际，形容范围极为广阔</td></tr><tr><td>井沿</td><td>jǐng yán</td><td>井的边沿</td></tr></tbody></table>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-12">
+    
+    <div class="title-bar">
+      <span>再读梳理</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">再读梳理 · 课文主要内容</div>
+    
+      <div class="elem-paragraph">青蛙坐在井里，小鸟飞来落在井沿上。它们为天有多大争论起来<span class="emph">。青蛙认</span>为天只有井口那么大，小鸟却说天无边无际。</div>
+    
+      <div class="discussion"><div class="q">❓ 青蛙和小鸟为什么会有不同的看法？</div><div class="hint">💡 想想它们各自所处的位置。</div><span class="form">同桌互说</span></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-13">
+    
+    <div class="title-bar">
+      <span>课堂小结</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">课堂小结</div>
+    
+      <div class="elem-paragraph">这节课我们初读了课文，认识了生字新词，知道了青蛙和小鸟为天的争论。下节课我们继续探究，看看谁说得对。</div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p1-14">
+    
+    <div class="title-bar">
+      <span>基础作业</span>
+      <span class="period-tag">第 1 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">作业布置</div>
+    
+      <ol class="elem-list"><li>抄写本课6个会写字，各3遍</li><li>正确流利地朗读课文3遍</li><li>思考：青蛙和小鸟谁说得对？为什么？</li></ol>
+    
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button class="prev">◀ 上一页</button>
+  <span class="counter">1 / 14</span>
+  <button class="next">下一页 ▶</button>
+</div>
+
+<script>/* 小学语文课件 · 互动逻辑：翻页 / 点读 / 答案显隐 / 计时器 / HanziWriter */
+(function () {
+  'use strict';
+  var slides = [];
+  var idx = 0;
+
+  function init() {
+    slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    if (!slides.length) return;
+    show(0);
+    bindKeys();
+    bindNav();
+    bindReveal();
+    bindReadAloud();
+    bindHanziWriter();
+    bindTimer();
+  }
+
+  function show(n) {
+    idx = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, i) {
+      s.classList.toggle('active', i === idx);
+    });
+    var counter = document.querySelector('.nav .counter');
+    if (counter) counter.textContent = (idx + 1) + ' / ' + slides.length;
+    var prog = document.querySelector('.progress');
+    if (prog) prog.style.width = ((idx + 1) / slides.length * 100) + '%';
+    updateNavBtns();
+  }
+
+  function next() { show(idx + 1); }
+  function prev() { show(idx - 1); }
+
+  function updateNavBtns() {
+    var prevBtn = document.querySelector('.nav .prev');
+    var nextBtn = document.querySelector('.nav .next');
+    if (prevBtn) prevBtn.disabled = (idx === 0);
+    if (nextBtn) nextBtn.disabled = (idx === slides.length - 1);
+  }
+
+  function bindKeys() {
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') show(0);
+      else if (e.key === 'End') show(slides.length - 1);
+      else if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+    });
+  }
+
+  function bindNav() {
+    var prevBtn = document.querySelector('.nav .prev');
+    var nextBtn = document.querySelector('.nav .next');
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+    if (nextBtn) nextBtn.addEventListener('click', next);
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+
+  // 答案显隐：点 .reveal 块切换隐藏
+  function bindReveal() {
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      el.style.cursor = 'pointer';
+      var hidden = el.querySelector('.reveal-hidden');
+      if (hidden) hidden.style.display = 'none';
+      el.addEventListener('click', function () {
+        if (hidden) {
+          hidden.style.display = (hidden.style.display === 'none') ? 'block' : 'none';
+        }
+      });
+    });
+  }
+
+  // 点读：点汉字用 SpeechSynthesis 朗读（浏览器 TTS，需中文语音）
+  function bindReadAloud() {
+    if (!('speechSynthesis' in window)) return;
+    document.querySelectorAll('[data-read]').forEach(function (el) {
+      el.style.cursor = 'pointer';
+      el.title = '点击朗读';
+      el.addEventListener('click', function () {
+        var text = el.getAttribute('data-read') || el.textContent;
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang = 'zh-CN';
+        u.rate = 0.85;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(u);
+      });
+    });
+  }
+
+  // HanziWriter 笔顺动画：含 data-hanzi 的元素加载后绘制
+  function bindHanziWriter() {
+    if (typeof HanziWriter === 'undefined') {
+      // CDN 未就绪则惰性加载
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js';
+      s.onload = drawAllWriters;
+      document.head.appendChild(s);
+    } else {
+      drawAllWriters();
+    }
+  }
+
+  var writers = [];
+  function drawAllWriters() {
+    document.querySelectorAll('[data-hanzi]').forEach(function (el) {
+      var ch = el.getAttribute('data-hanzi');
+      el.innerHTML = '';
+      try {
+        var w = HanziWriter.create(el, ch, {
+          width: 120, height: 120, padding: 4,
+          strokeColor: '#3D2B1F', radicalColor: '#E8743C',
+          drawingWidth: 24, showOutline: true,
+          delayBetweenStrokes: 200
+        });
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', function () { w.animateCharacter(); });
+        writers.push(w);
+      } catch (e) {
+        el.textContent = ch; // 字库无此字则退化
+      }
+    });
+  }
+
+  // 计时器：含 .timer 的按钮
+  function bindTimer() {
+    document.querySelectorAll('.timer').forEach(function (btn) {
+      var seconds = parseInt(btn.getAttribute('data-seconds') || '60', 10);
+      var timer = null;
+      btn.addEventListener('click', function () {
+        if (timer) { clearInterval(timer); timer = null; btn.textContent = '⏱ ' + seconds + 's'; return; }
+        var left = seconds;
+        btn.textContent = '⏱ ' + left + 's';
+        timer = setInterval(function () {
+          left--;
+          btn.textContent = '⏱ ' + left + 's';
+          if (left <= 0) { clearInterval(timer); timer = null; btn.textContent = '⏱ 时间到！'; }
+        }, 1000);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

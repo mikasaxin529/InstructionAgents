@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>坐井观天 · 第2课时</title>
+<style>/* 小学语文课件 · 暖白大字卡片样式（与 PPTX 同一套 token） */
+:root {
+  --bg: #FDF9F1;
+  --bg-card: #FFFFFF;
+  --title-bar: #ED7D31;
+  --text: #4A3B2E;
+  --title-text: #3D2B1F;
+  --text-light: #9C8B78;
+  --accent: #ED7D31;
+  --accent2: #3E8E5A;
+  --accent3: #3E7BB6;
+  --divider: #EAD9BE;
+  /* 关键词高亮轮换色 */
+  --hl1: #3E7BB6;
+  --hl2: #3E8E5A;
+  --hl3: #E2574C;
+  --hl4: #8E6BB5;
+  /* 声调标色 */
+  --tone1: #D9534F;
+  --tone2: #E8A33C;
+  --tone3: #5BA88A;
+  --tone4: #5B8AB5;
+  --tone0: #9AA0A6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  font-family: "微软雅黑", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", "黑体", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* 幻灯片容器：全屏单页 */
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide {
+  display: none;
+  width: 100%; height: 100%;
+  padding: 0;
+  background: var(--bg);
+  position: relative;
+}
+.slide.active { display: flex; flex-direction: column; }
+
+/* 封面 */
+.slide.cover {
+  justify-content: center; align-items: center; text-align: center;
+}
+.slide.cover .cover-title {
+  font-size: 5em; color: var(--accent); font-weight: 800;
+  margin-bottom: 0.3em;
+}
+.slide.cover .cover-sub { font-size: 1.6em; color: var(--text-light); }
+.slide.cover .cover-period { font-size: 1.4em; color: var(--accent2); margin-top: 0.5em; }
+
+/* 标题色带 */
+.title-bar {
+  background: var(--title-bar);
+  color: #fff; font-size: 2em; font-weight: 700;
+  padding: 0.4em 1.2em;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.title-bar .period-tag { font-size: 0.6em; opacity: 0.95; }
+
+/* 内容区 */
+.content {
+  flex: 1; padding: 1em 2.2em; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 0.6em;
+}
+
+/* 元素样式 */
+.elem-h1 { font-size: 2em; color: var(--accent); font-weight: 700; margin: 0.2em 0; }
+.elem-h2 { font-size: 1.6em; color: var(--accent); font-weight: 700; margin: 0.2em 0; }
+.elem-h3 { font-size: 1.3em; color: var(--accent); font-weight: 600; margin: 0.1em 0; }
+.elem-paragraph { font-size: 1.4em; line-height: 1.8; }
+.elem-paragraph .emph { color: var(--accent); font-weight: 700; }
+.elem-list { font-size: 1.3em; line-height: 1.9; padding-left: 1.2em; }
+.elem-list li { margin: 0.2em 0; }
+.elem-quote {
+  font-family: "楷体", "KaiTi", "STKaiti", serif;
+  font-size: 1.8em; color: var(--accent); text-align: center;
+  padding: 0.4em 1em; background: #fff; border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.elem-quote .quote-src { display: block; font-size: 0.5em; color: var(--text-light); text-align: right; }
+
+/* 注音 ruby */
+ruby { ruby-position: over; }
+ruby rt {
+  font-size: 0.45em; font-family: Consolas, monospace;
+  letter-spacing: 0.05em;
+}
+ruby rt.t1 { color: var(--tone1); }
+ruby rt.t2 { color: var(--tone2); }
+ruby rt.t3 { color: var(--tone3); }
+ruby rt.t4 { color: var(--tone4); }
+ruby rt.t0 { color: var(--tone0); }
+.ruby-line { font-size: 2em; text-align: center; padding: 0.5em; }
+
+/* 古诗 */
+.poem { text-align: center; padding: 1em; }
+.poem .poem-title { font-family: "楷体", serif; font-size: 2.4em; color: var(--accent); margin-bottom: 0.4em; }
+.poem .poem-line { font-family: "楷体", serif; font-size: 2em; margin: 0.3em 0; }
+
+/* 生字卡 */
+.word-cards {
+  display: grid; gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  padding: 0.5em;
+}
+.word-card {
+  background: var(--bg-card); border-radius: 16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  padding: 0.8em; text-align: center;
+}
+.word-card .wc-pinyin { font-family: Consolas, monospace; font-size: 1.3em; color: var(--accent2); }
+.word-card .wc-char {
+  font-size: 4em; font-weight: 800; color: var(--text); line-height: 1.1;
+}
+.word-card .wc-groups { font-size: 1.1em; color: var(--text-light); margin-top: 0.3em; }
+.word-card .wc-sentence { font-size: 1em; color: var(--text-light); margin-top: 0.2em; }
+
+/* 田字格/写字 */
+.revision { display: grid; gap: 1em; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.revision-card { background: var(--bg-card); border-radius: 14px; padding: 1em; display: flex; gap: 1em; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.tianzi {
+  width: 130px; height: 130px; flex-shrink: 0;
+  background: #fff; border: 2px solid var(--text-light);
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.tianzi::before, .tianzi::after {
+  content: ''; position: absolute; background: var(--divider);
+}
+.tianzi::before { left: 50%; top: 5%; bottom: 5%; width: 1px; }
+.tianzi::after { top: 50%; left: 5%; right: 5%; height: 1px; }
+.tianzi .big-char { font-size: 3.5em; color: var(--text); position: relative; z-index: 1; }
+.revision-note { font-size: 1.1em; line-height: 1.6; }
+.revision-note b { color: var(--accent); }
+
+/* 板书 */
+.board { text-align: center; padding: 1em; }
+.board-title { font-family: "楷体", serif; font-size: 2.4em; color: var(--accent); margin-bottom: 0.6em; }
+.board-node { font-size: 1.5em; font-weight: 700; margin: 0.3em 0; }
+.board-child { font-size: 1.2em; color: var(--text-light); margin-left: 2em; }
+
+/* 课堂互动 */
+.discussion {
+  background: #fff; border-left: 6px solid var(--accent2);
+  border-radius: 8px; padding: 1em 1.2em; font-size: 1.4em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.discussion .q { color: var(--accent2); font-weight: 700; margin-bottom: 0.5em; }
+.discussion .hint { color: var(--text-light); font-size: 0.8em; }
+.discussion .form { display: inline-block; background: var(--accent); color: #fff; border-radius: 6px; padding: 0.1em 0.6em; font-size: 0.7em; margin-top: 0.5em; }
+
+/* 表格 */
+.elem-table { width: 100%; border-collapse: collapse; font-size: 1.2em; margin: 0.5em 0; }
+.elem-table th { background: var(--accent); color: #fff; padding: 0.5em; }
+.elem-table td { background: #fff; padding: 0.5em; border: 1px solid var(--divider); text-align: center; }
+.elem-table tr:nth-child(even) td { background: var(--bg); }
+
+/* 评价量表用表格同款 */
+
+/* 教师备注（默认隐藏） */
+.note { font-size: 1em; color: var(--text-light); background: #fff7ee; border-radius: 6px; padding: 0.5em 0.8em; }
+.note::before { content: "📋 "; }
+
+/* 图片 */
+.elem-image { text-align: center; }
+.elem-image img { max-width: 80%; max-height: 50vh; border-radius: 12px; }
+.elem-image .caption { font-size: 1em; color: var(--text-light); margin-top: 0.3em; }
+
+/* 导航 */
+.nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(61,43,31,0.85); color: #fff;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5em 2em; font-size: 1.1em; z-index: 100;
+}
+.nav button {
+  background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  padding: 0.4em 1.2em; font-size: 1em; cursor: pointer;
+}
+.nav button:hover { background: #c8622f; }
+.nav .counter { font-family: Consolas, monospace; }
+
+/* 进度条 */
+.progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--accent); z-index: 101; transition: width 0.3s; }
+</style>
+</head>
+<body>
+<div class="progress"></div>
+<div class="deck">
+
+  <section class="slide" id="p2-01">
+    
+    <div class="title-bar">
+      <span>复习导入</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">复习导入</div>
+    
+      <div class="elem-paragraph">听写词语：井沿、回答、口渴、喝水、说话、弄错、无边无际</div>
+    
+      <div class="discussion"><div class="q">❓ 上节课我们知道了什么？青蛙和小鸟在争论什么？</div><div class="hint">💡 回顾课文主要内容。</div><span class="form">全班交流</span></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-02">
+    
+    <div class="title-bar">
+      <span>精读品析 · 青蛙的话</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">精读品析</div>
+    
+      <div class="elem-quote">「朋友，别说大话了！天不过井口那么大，还用飞那么远吗？」<span class="quote-src">— 青蛙</span></div>
+    
+      <div class="discussion"><div class="q">❓ 从青蛙的话里，你体会到它怎样的语气？</div><div class="hint">💡 注意&quot;别说大话了&quot;&quot;不过&quot;&quot;还用&quot;这些词。</div><span class="form">小组讨论</span></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-03">
+    
+    <div class="title-bar">
+      <span>精读品析 · 小鸟的话</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h2">精读品析</div>
+    
+      <div class="elem-quote">「你弄错了。天无边无际，大得很哪！」<span class="quote-src">— 小鸟</span></div>
+    
+      <div class="elem-paragraph">小鸟飞了一百多里，<span class="emph">说明它见</span>过很大的天。&quot;无边无际&quot;说明天非常非常大。</div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-04">
+    
+    <div class="title-bar">
+      <span>精读品析 · 争论升级</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h2">精读品析 · 争论升级</div>
+    
+      <div class="elem-quote">「青蛙笑了，说：朋友，我天天坐在井里，一抬头就看见天。我不会弄错的。」<span class="quote-src">— 青蛙</span></div>
+    
+      <div class="discussion"><div class="q">❓ 青蛙为什么&quot;笑&quot;？它的笑里有什么意味？</div><div class="hint">💡 青蛙觉得自己天天坐井观天，怎么会错。</div><span class="form">小组讨论</span></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-05">
+    
+    <div class="title-bar">
+      <span>精读品析 · 小鸟的劝告</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h2">精读品析</div>
+    
+      <div class="elem-quote">「小鸟也笑了，说：朋友，你是弄错了。不信，你跳出井口来看一看吧。」<span class="quote-src">— 小鸟</span></div>
+    
+      <div class="elem-paragraph"><span class="emph">小鸟</span>笑着劝青蛙跳出井口，亲眼看看外面的天。如果青蛙跳出井来，它会看到怎样的天呢？</div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-06">
+    
+    <div class="title-bar">
+      <span>合作探究</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">合作探究</div>
+    
+      <div class="discussion"><div class="q">❓ 青蛙和小鸟谁说得对？为什么它们看到的&quot;天&quot;不一样？</div><div class="hint">💡 青蛙在井底，视野狭窄；小鸟在天空，视野开阔。看问题的角度不同，结论就不同。</div><span class="form">小组讨论</span></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-07">
+    
+    <div class="title-bar">
+      <span>朗读指导</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">朗读指导 · 分角色朗读</div>
+    
+      <div class="elem-paragraph">青蛙的语气：自信、不以为然；小鸟的语气：真诚、耐心劝说。</div>
+    
+      <div class="ruby-line" data-read="天不过井口那么大，还用飞那么远吗？"><ruby><rb>天</rb><rt class="t1">tiān</rt></ruby><ruby><rb>不</rb><rt class="t4">bù</rt></ruby><ruby><rb>过</rb><rt class="t4">guò</rt></ruby><ruby><rb>井</rb><rt class="t3">jǐng</rt></ruby><ruby><rb>口</rb><rt class="t3">kǒu</rt></ruby><ruby><rb>那</rb><rt class="t4">nà</rt></ruby><ruby><rb>么</rb><rt class="t0">me</rt></ruby><ruby><rb>大</rb><rt class="t4">dà</rt></ruby><ruby><rb>，</rb><rt class="t2">hái</rt></ruby><ruby><rb>还</rb><rt class="t4">yòng</rt></ruby><ruby><rb>用</rb><rt class="t1">fēi</rt></ruby><ruby><rb>飞</rb><rt class="t4">nà</rt></ruby><ruby><rb>那</rb><rt class="t0">me</rt></ruby><ruby><rb>么</rb><rt class="t3">yuǎn</rt></ruby><ruby><rb>远</rb><rt class="t0">ma</rt></ruby><ruby><rb>吗</rb><rt></rt></ruby><ruby><rb>？</rb><rt></rt></ruby></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-08">
+    
+    <div class="title-bar">
+      <span>写法总结</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">写法总结</div>
+    
+      <ul class="elem-list"><li>通过对话展开故事，推进情节</li><li>青蛙和小鸟的语言符合各自身份</li><li>运用对比，凸显&quot;看问题要全面&quot;的道理</li></ul>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-09">
+    
+    <div class="title-bar">
+      <span>拓展延伸</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">拓展延伸</div>
+    
+      <div class="elem-paragraph">想一想<span class="emph">，青蛙如果跳</span>出井口，它会看到什么？说什么？</div>
+    
+      <div class="discussion"><div class="q">❓ 生活中你有没有&quot;坐井观天&quot;的时候？说说怎样做才能看得更全面。</div><div class="hint">💡 联系生活，多看多听多想。</div><span class="form">同桌互说</span></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-10">
+    
+    <div class="title-bar">
+      <span>板书设计</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">板书设计</div>
+    
+      <div class="board"><div class="board-title">坐井观天</div><div class="board-node">● 青蛙（井底）</div><div class="board-child">○ 天井口大</div><div class="board-child">○ 目光短浅</div><div class="board-node">● 小鸟（天上）</div><div class="board-child">○ 天无边无际</div><div class="board-child">○ 目光远大</div><div class="board-node">● 道理：看问题要全面</div></div>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-11">
+    
+    <div class="title-bar">
+      <span>课堂练习</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">课堂练习</div>
+    
+      <ol class="elem-list"><li>选词填空：青蛙坐在（井里/天上）。</li><li>判断：青蛙说得对。（  ）小鸟说得对。（ ）</li><li>用&quot;无边无际&quot;说一句话。</li></ol>
+    
+    </div>
+  </section>
+
+  <section class="slide" id="p2-12">
+    
+    <div class="title-bar">
+      <span>分层作业</span>
+      <span class="period-tag">第 2 课时</span>
+    </div>
+    
+    
+    <div class="content">
+    
+      <div class="elem-h1">分层作业</div>
+    
+      <ol class="elem-list"><li>【基础】有感情朗读课文，分角色读给家人听。</li><li>【提升】续写：青蛙跳出井口后……</li><li>【拓展】收集一个成语故事，讲给同学听。</li></ol>
+    
+    </div>
+  </section>
+
+  <section class="slide cover" id="p2-13">
+    
+    
+    <div class="content">
+    
+      <hr style="border:none;border-top:2px solid var(--divider);margin:1em 0">
+    
+      <div class="elem-h1">谢谢聆听</div>
+    
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button class="prev">◀ 上一页</button>
+  <span class="counter">1 / 13</span>
+  <button class="next">下一页 ▶</button>
+</div>
+
+<script>/* 小学语文课件 · 互动逻辑：翻页 / 点读 / 答案显隐 / 计时器 / HanziWriter */
+(function () {
+  'use strict';
+  var slides = [];
+  var idx = 0;
+
+  function init() {
+    slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    if (!slides.length) return;
+    show(0);
+    bindKeys();
+    bindNav();
+    bindReveal();
+    bindReadAloud();
+    bindHanziWriter();
+    bindTimer();
+  }
+
+  function show(n) {
+    idx = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, i) {
+      s.classList.toggle('active', i === idx);
+    });
+    var counter = document.querySelector('.nav .counter');
+    if (counter) counter.textContent = (idx + 1) + ' / ' + slides.length;
+    var prog = document.querySelector('.progress');
+    if (prog) prog.style.width = ((idx + 1) / slides.length * 100) + '%';
+    updateNavBtns();
+  }
+
+  function next() { show(idx + 1); }
+  function prev() { show(idx - 1); }
+
+  function updateNavBtns() {
+    var prevBtn = document.querySelector('.nav .prev');
+    var nextBtn = document.querySelector('.nav .next');
+    if (prevBtn) prevBtn.disabled = (idx === 0);
+    if (nextBtn) nextBtn.disabled = (idx === slides.length - 1);
+  }
+
+  function bindKeys() {
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') show(0);
+      else if (e.key === 'End') show(slides.length - 1);
+      else if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+    });
+  }
+
+  function bindNav() {
+    var prevBtn = document.querySelector('.nav .prev');
+    var nextBtn = document.querySelector('.nav .next');
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+    if (nextBtn) nextBtn.addEventListener('click', next);
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+
+  // 答案显隐：点 .reveal 块切换隐藏
+  function bindReveal() {
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      el.style.cursor = 'pointer';
+      var hidden = el.querySelector('.reveal-hidden');
+      if (hidden) hidden.style.display = 'none';
+      el.addEventListener('click', function () {
+        if (hidden) {
+          hidden.style.display = (hidden.style.display === 'none') ? 'block' : 'none';
+        }
+      });
+    });
+  }
+
+  // 点读：点汉字用 SpeechSynthesis 朗读（浏览器 TTS，需中文语音）
+  function bindReadAloud() {
+    if (!('speechSynthesis' in window)) return;
+    document.querySelectorAll('[data-read]').forEach(function (el) {
+      el.style.cursor = 'pointer';
+      el.title = '点击朗读';
+      el.addEventListener('click', function () {
+        var text = el.getAttribute('data-read') || el.textContent;
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang = 'zh-CN';
+        u.rate = 0.85;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(u);
+      });
+    });
+  }
+
+  // HanziWriter 笔顺动画：含 data-hanzi 的元素加载后绘制
+  function bindHanziWriter() {
+    if (typeof HanziWriter === 'undefined') {
+      // CDN 未就绪则惰性加载
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js';
+      s.onload = drawAllWriters;
+      document.head.appendChild(s);
+    } else {
+      drawAllWriters();
+    }
+  }
+
+  var writers = [];
+  function drawAllWriters() {
+    document.querySelectorAll('[data-hanzi]').forEach(function (el) {
+      var ch = el.getAttribute('data-hanzi');
+      el.innerHTML = '';
+      try {
+        var w = HanziWriter.create(el, ch, {
+          width: 120, height: 120, padding: 4,
+          strokeColor: '#3D2B1F', radicalColor: '#E8743C',
+          drawingWidth: 24, showOutline: true,
+          delayBetweenStrokes: 200
+        });
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', function () { w.animateCharacter(); });
+        writers.push(w);
+      } catch (e) {
+        el.textContent = ch; // 字库无此字则退化
+      }
+    });
+  }
+
+  // 计时器：含 .timer 的按钮
+  function bindTimer() {
+    document.querySelectorAll('.timer').forEach(function (btn) {
+      var seconds = parseInt(btn.getAttribute('data-seconds') || '60', 10);
+      var timer = null;
+      btn.addEventListener('click', function () {
+        if (timer) { clearInterval(timer); timer = null; btn.textContent = '⏱ ' + seconds + 's'; return; }
+        var left = seconds;
+        btn.textContent = '⏱ ' + left + 's';
+        timer = setInterval(function () {
+          left--;
+          btn.textContent = '⏱ ' + left + 's';
+          if (left <= 0) { clearInterval(timer); timer = null; btn.textContent = '⏱ 时间到！'; }
+        }, 1000);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

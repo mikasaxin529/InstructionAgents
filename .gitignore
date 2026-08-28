@@ -1,0 +1,23 @@
+# Python 编译缓存
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 虚拟环境
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 生成的临时输出（保留 语文课件/ 示例成品，仅忽略临时测试）
+/tmp/
+*.tmp
